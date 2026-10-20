@@ -1,9 +1,8 @@
 "use client"
 
-import Image from "next/image";
-import { Mail, Briefcase, Calendar, ExternalLink, Image as ImageIcon, Code, Maximize2, X } from "lucide-react";
-import Navbar from "../components/Navbar";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Mail, Briefcase, Calendar, Image as ImageIcon, Code, Maximize2, X } from "lucide-react";
+import Navbar from "../components/Navbar"; // Adjusted import path
 
 // Define the shape of a single skill item
 interface Skill {
@@ -16,6 +15,13 @@ interface SkillCategory {
   title: string;
   isList?: boolean; // Optional flag for text-only lists
   skills: Skill[];
+}
+
+interface Experience {
+  role: string;
+  company: string;
+  date: string;
+  bullets: string[];
 }
 
 interface Project {
@@ -105,53 +111,53 @@ const skillCategories: SkillCategory[] = [
   }
 ];
 
-const experiences = [
-{
-role: "Research Assistant Intern",
-company: "GAME Lab - De La Salle University Manila",
-date: "Jan 2026 - June 2026",
-bullets: [
-"Developed a 3D game engine/scene editor software using C++ libraries and frameworks like BGFX with an AI-integrated workflow using Claude and ChatGPT",
-"Made significant contributions to the research and development of the in-house game engine creation of Project Anito, a DOST-funded project",
-"Created 3D environments and scenes through Blender, Unity, and self-developed editor software, AnitoCrosshatch"
-]
-},
-{
-role: "Systems Development Intern",
-company: "Abenson Ventures Inc.",
-date: "Jan 2025 - March 2025",
-bullets: [
-"Designed and developed front-end user interfaces for staging websites through designing applications and front-end components development tools like Magento",
-"Participated in back-end systems workshops and developed back-end systems with continuous integration",
-"Coordinated testing and validation of various website functions and implementations"
-]
-}
+const experiences: Experience[] = [
+  {
+    role: "Research Assistant Intern",
+    company: "GAME Lab - De La Salle University Manila",
+    date: "Jan 2026 - June 2026",
+    bullets: [
+      "Developed a 3D game engine/scene editor software using C++ libraries and frameworks like BGFX with an AI-integrated workflow using Claude and ChatGPT",
+      "Made significant contributions to the research and development of the in-house game engine creation of Project Anito, a DOST-funded project",
+      "Created 3D environments and scenes through Blender, Unity, and self-developed editor software, AnitoCrosshatch"
+    ]
+  },
+  {
+    role: "Systems Development Intern",
+    company: "Abenson Ventures Inc.",
+    date: "Jan 2025 - March 2025",
+    bullets: [
+      "Designed and developed front-end user interfaces for staging websites through designing applications and front-end components development tools like Magento",
+      "Participated in back-end systems workshops and developed back-end systems with continuous integration",
+      "Coordinated testing and validation of various website functions and implementations"
+    ]
+  }
 ];
 
-const projects : Project[] = [
-{
-title: "AnitoCrosshatch: Designing a 3D Editor Tool for Cross Hatch-Rendered 3d Environments (Undergraduate Thesis)",
-date: "November 2024 - June 2026",
-bullets: [
-"Designed and developed a 3D editor tool that that can create 3D environments with a cross-hatching style using primitive and imported 3D objects.",
-"Built from the ground up with the Bgfx framework, GLFW rendrering, and ImGui user interface",
-"Selected for exhibition in multiple showcases featuring notable projects in game development and computer graphics",
-"Exhibited at: Philippine Blockchain Week 2025, GoGlobe Game Changers 2025, Philippine Game Dev Expo 2025 & 2026"
-],
-tech: ["C++", "BGFX", "GLFW", "ImGui"],
-imgSrc: "/anitocrosshatch.png"
-},
-{
-title: "HQSys: Hospital Queueing System",
-date: "June 2026 - August 2026",
-bullets: [
-"Developed a secure, full-stack queue management application designed for clinic environments using Next.js, TypeScript, and Supabase.",
-"Features real-time synchronization that mirrors queue states between the main queue and individual accounts.",
-"Includes strict role-based access control, hardware integration for thermal printing, and server-side security for sensitive data."
-],
-tech: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"],
-imgSrc: "/HQsys.png"
-}
+const projects: Project[] = [
+  {
+    title: "AnitoCrosshatch: Designing a 3D Editor Tool for Cross Hatch-Rendered 3d Environments (Undergraduate Thesis)",
+    date: "November 2024 - June 2026",
+    bullets: [
+      "Designed and developed a 3D editor tool that that can create 3D environments with a cross-hatching style using primitive and imported 3D objects.",
+      "Built from the ground up with the Bgfx framework, GLFW rendering, and ImGui user interface",
+      "Selected for exhibition in multiple showcases featuring notable projects in game development and computer graphics",
+      "Exhibited at: Philippine Blockchain Week 2025, GoGlobe Game Changers 2025, Philippine Game Dev Expo 2025 & 2026"
+    ],
+    tech: ["C++", "BGFX", "GLFW", "ImGui"],
+    imgSrc: "/anitocrosshatch.png"
+  },
+  {
+    title: "HQSys: Hospital Queueing System",
+    date: "June 2026 - August 2026",
+    bullets: [
+      "Developed a secure, full-stack queue management application designed for clinic environments using Next.js, TypeScript, and Supabase.",
+      "Features real-time synchronization that mirrors queue states between the main queue and individual accounts.",
+      "Includes strict role-based access control, hardware integration for thermal printing, and server-side security for sensitive data."
+    ],
+    tech: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"],
+    imgSrc: "/HQsys.png"
+  }
 ];
 
 const minorProjects: MinorProject[] = [
@@ -187,34 +193,39 @@ const minorProjects: MinorProject[] = [
   }
 ];
 
-export default function Home() {
-  const [ selectedMedia, setSelectedMedia ] = useState<{ title: string; imgSrc?: string } | null>(null);
+export default function App() {
+  const [selectedMedia, setSelectedMedia] = useState<{ title: string; imgSrc?: string } | null>(null);
 
   return (
-    <div className="relative min-h-screen bg-zinc-950 text-white overflow-hidden font-sans selection:bg-purple-500 selection:text-white">
-      {/*Background Elements */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        {/*Glowy Stuff*/}
+    <div className="relative min-h-screen bg-zinc-950 text-white overflow-x-hidden font-sans selection:bg-purple-500 selection:text-white scroll-smooth">
+      {/* Background Elements */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        {/* Glowy Stuff */}
         <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-purple-600/40 rounded-full blur-[120px] mix-blend-screen"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] max-w-[500px] max-h-[500px] bg-yellow-600/30 rounded-full blur-[100px] mix-blend-screen"></div>
         <svg className="absolute inset-0 w-full h-full opacity-30" preserveAspectRatio="none" viewBox="0 0 1440 800">
-            <path d="M -100 300 C 200 150, 400 500, 800 350 C 1200 200, 1400 450, 1600 300" fill="none" stroke="url(#purple-gradient)" strokeWidth="1" />
-            <path d="M -100 450 C 300 300, 600 650, 1000 450 C 1300 300, 1500 500, 1600 400" fill="none" stroke="url(#orange-gradient)" strokeWidth="0.5" />
-            <defs>
-                <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#a855f7" />
-                    <stop offset="100%" stopColor="transparent" />
-                </linearGradient>
-                <linearGradient id="orange-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="transparent" />
-                    <stop offset="100%" stopColor="#f97316" />
-                </linearGradient>
-            </defs>
+          <path d="M -100 300 C 200 150, 400 500, 800 350 C 1200 200, 1400 450, 1600 300" fill="none" stroke="url(#purple-gradient)" strokeWidth="1" />
+          <path d="M -100 450 C 300 300, 600 650, 1000 450 C 1300 300, 1500 500, 1600 400" fill="none" stroke="url(#orange-gradient)" strokeWidth="0.5" />
+          <defs>
+            <linearGradient id="purple-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#a855f7" />
+              <stop offset="100%" stopColor="transparent" />
+            </linearGradient>
+            <linearGradient id="orange-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="transparent" />
+              <stop offset="100%" stopColor="#f97316" />
+            </linearGradient>
+          </defs>
         </svg>
       </div>
+
+      {/* Render the Navbar component */}
       <Navbar />
+
       <main className="relative z-10 max-w-7xl mx-auto px-6 pb-24">
-        <section className="py-20 md:py-32 flex flex-col md:flex-row items-center gap-16">
+        
+        {/* Hero Section */}
+        <section id="about" className="pt-28 md:pt-40 pb-20 flex flex-col md:flex-row items-center gap-16 scroll-mt-24">
           {/* LEFT COLUMN: Circular Portrait */}
           <div className="w-full md:w-4/10 flex justify-center md:justify-end">
             <div className="relative group">
@@ -236,8 +247,6 @@ export default function Home() {
 
           {/* RIGHT COLUMN: Typography & Information */}
           <div className="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left">
-            
-            {/* Greeting & Name */}
             <div className="mb-6 space-y-2">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium text-gray-300 tracking-tight">
                 Hello,
@@ -247,12 +256,10 @@ export default function Home() {
               </h2>
             </div>
 
-            {/* Description */}
             <p className="text-gray-400 text-lg md:text-xl leading-relaxed max-w-lg mb-8">
               Adaptable Software Technology graduate with hands-on expertise in building clean, scalable software solutions.
             </p>
 
-            {}
             <div className="flex flex-wrap justify-center md:justify-start gap-3 mb-10">
               {['Software Engineer', 'Web Developer', 'Data Engineer'].map((role, i) => (
                 <span 
@@ -264,17 +271,16 @@ export default function Home() {
               ))}
             </div>
               
-            {}
             <div className="flex items-center gap-4">
               <a href="#" className="hidden sm:flex p-3 bg-white/5 border border-white/10 hover:border-purple-500/50 rounded-xl hover:-translate-y-1 transition-all duration-300 group shadow-lg">
                 <Mail className="w-6 h-6 text-gray-400 group-hover:text-white" />
               </a>
             </div>
-
           </div>
         </section>
+
         {/* Skills Section */}
-        <section className="pt-10">
+        <section id="skills" className="pt-10 scroll-mt-24">
           <div className="flex items-end gap-6 mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-white">SKILLS</h2>
             <div className="flex-1 h-px bg-gradient-to-r from-emerald-500 to-transparent mb-3"></div>
@@ -306,7 +312,6 @@ export default function Home() {
                         key={i} 
                         className="group relative flex items-center justify-center w-12 h-12 rounded-xl bg-white/5 border border-white/10 hover:bg-emerald-500/10 hover:border-emerald-500/50 transition-all duration-300 p-2"
                       >
-                        {/* Only render image if imgSrc is present (TS now knows it might be undefined) */}
                         {skill.imgSrc ? (
                           <img 
                             src={skill.imgSrc} 
@@ -333,7 +338,7 @@ export default function Home() {
         </section>
 
         {/* Professional Experience Section */}
-        <section id="experience" className="pt-10">
+        <section id="experience" className="pt-20 scroll-mt-24">
           <div className="flex items-end gap-6 mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight uppercase">Professional Experience</h2>
             <div className="flex-1 h-px bg-gradient-to-r from-emerald-500/50 to-transparent mb-3"></div>
@@ -375,13 +380,13 @@ export default function Home() {
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="pt-10">
+        <section id="projects" className="pt-20 scroll-mt-24">
           <div className="flex items-end gap-6 mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight uppercase">Projects</h2>
             <div className="flex-1 h-px bg-gradient-to-r from-emerald-500/50 to-transparent mb-3"></div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
             {projects.map((project, index) => (
               <div key={index} className="flex flex-col bg-[#161920]/80 backdrop-blur-sm border border-white/5 hover:border-emerald-500/30 rounded-2xl overflow-hidden transition-all duration-300 group">
                 
@@ -412,7 +417,6 @@ export default function Home() {
                     </button>
                   </div>
                 </div>
-
 
                 {/* Content */}
                 <div className="p-8 flex flex-col flex-1">
@@ -446,9 +450,8 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </section>
-        {/* Minor Projects Section */}
-        <section>
+
+          {/* Minor Projects Section */}
           <div className="flex items-end gap-6 mb-12">
             <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight uppercase">Minor Projects</h3>
             <div className="flex-1 h-px bg-gradient-to-r from-emerald-500/30 to-transparent mb-2"></div>
@@ -473,6 +476,15 @@ export default function Home() {
                       <span className="absolute bottom-3 left-3 z-20 text-[10px] uppercase font-mono text-slate-600 tracking-wider">Screenshot Space</span>
                     </>
                   )}
+                  
+                  <div className="absolute inset-0 bg-emerald-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 flex items-center justify-center backdrop-blur-[2px]">
+                    <button 
+                      onClick={() => setSelectedMedia({ title: project.title, imgSrc: project.imgSrc })}
+                      className="px-4 py-1.5 bg-emerald-500 text-white font-medium text-xs rounded-full flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:bg-emerald-400 shadow-lg cursor-pointer"
+                    >
+                      View Media <Maximize2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="p-6 flex flex-col flex-1">
@@ -490,9 +502,10 @@ export default function Home() {
 
       </main>
 
+      {/* Media Lightbox Modal */}
       {selectedMedia && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 bg-black/80 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-8 bg-black/80 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
           onClick={() => setSelectedMedia(null)}
         >
           <div 
@@ -539,70 +552,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-/**
- * <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
- */
