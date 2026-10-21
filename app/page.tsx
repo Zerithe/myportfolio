@@ -156,7 +156,7 @@ const projects: Project[] = [
       "Includes strict role-based access control, hardware integration for thermal printing, and server-side security for sensitive data."
     ],
     tech: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"],
-    imgSrc: "/HQsys.png"
+    imgSrc: "/HQSys.png"
   }
 ];
 
